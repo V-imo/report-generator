@@ -9,6 +9,7 @@ export interface ReportGeneratorProps extends cdk.StackProps {
 export class ReportGenerator extends cdk.Stack {
   constructor(scope: Construct, id: string, props: ReportGeneratorProps) {
     super(scope, id, props)
-
+    // Add your infra here...
+    // test
   }
 }
