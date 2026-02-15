@@ -14,24 +14,7 @@ const tracer = new Tracer({ serviceName: process.env.SERVICE });
 const s3Client = tracer.captureAWSv3Client(new S3Client({}));
 const eventBridgeClient = tracer.captureAWSv3Client(new EventBridgeClient({}));
 
-type EventEnvelope = {
-    type: string;
-    data: Record<string, any>;
-    timestamp: number;
-    source: string;
-    id: string;
-};
-
-type Room = {
-    name: string;
-    description?: string;
-    elements: {
-        name: string;
-        description?: string;
-        state: "NEW" | "GOOD" | "BAD" | "BROKEN";
-        images?: string[];
-    }[];
-};
+type Room = NonNullable<InspectionUpdatedEvent.InspectionUpdatedEventData["rooms"]>[number];
 
 const STATE_COLORS: Record<string, string> = {
     NEW: "#22c55e",
@@ -270,7 +253,7 @@ function InspectionReport({
 }
 
 export const handler = async (
-    event: EventBridgeEvent<string, EventEnvelope>
+    event: EventBridgeEvent<string, InspectionUpdatedEvent.InspectionUpdatedEventEnvelope>
 ) => {
     logger.info("Received inspection event", { event });
 
