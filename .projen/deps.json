@@ -23,6 +23,10 @@
       "type": "build"
     },
     {
+      "name": "@types/react",
+      "type": "build"
+    },
+    {
       "name": "@typescript-eslint/eslint-plugin",
       "version": "^8",
       "type": "build"
@@ -100,6 +104,10 @@
       "type": "runtime"
     },
     {
+      "name": "@react-pdf/renderer",
+      "type": "runtime"
+    },
+    {
       "name": "aws-cdk-lib",
       "version": "^2.1.0",
       "type": "runtime"
@@ -111,6 +119,10 @@
     },
     {
       "name": "dynamodb-toolbox",
+      "type": "runtime"
+    },
+    {
+      "name": "react",
       "type": "runtime"
     },
     {
