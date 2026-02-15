@@ -50,7 +50,7 @@ export class ReportGenerator extends cdk.Stack {
 
         // Lambda PdfGenerator
         const pdfGenerator = new ln.NodejsFunction(this, "PdfGenerator", {
-            entry: `${__dirname}/functions/pdf-generator.ts`,
+            entry: `${__dirname}/functions/pdf-generator.tsx`,
             environment: {
                 STAGE: props.stage,
                 SERVICE: props.serviceName,
@@ -63,7 +63,11 @@ export class ReportGenerator extends cdk.Stack {
             timeout: cdk.Duration.seconds(60),
             memorySize: 1024,
             bundling: {
-                nodeModules: ['pdfkit'],
+                format: ln.OutputFormat.ESM,
+                mainFields: ['module', 'main'],
+                banner: "import { createRequire } from 'module'; const require = createRequire(import.meta.url);",
+                externalModules: ['@aws-sdk/*'],
+                sourceMap: true,
             },
         });
 
