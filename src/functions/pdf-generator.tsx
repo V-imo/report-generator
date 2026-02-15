@@ -169,10 +169,10 @@ async function prefetchImages(rooms: Room[]): Promise<ImageCache> {
 }
 
 function InspectionReport({
-    inspection,
-    agencyName,
-    imageCache,
-}: {
+                              inspection,
+                              agencyName,
+                              imageCache,
+                          }: {
     inspection: InspectionUpdatedEvent.InspectionUpdatedEventData;
     agencyName: string;
     imageCache: ImageCache;
@@ -253,7 +253,7 @@ function InspectionReport({
 }
 
 export const handler = async (
-    event: EventBridgeEvent<string, InspectionUpdatedEvent.InspectionUpdatedEventEnvelope>
+    event: EventBridgeEvent<string, any>
 ) => {
     logger.info("Received inspection event", { event });
 
@@ -301,6 +301,7 @@ export const handler = async (
 
     logger.info("PDF uploaded to S3", { bucketName, key });
 
+    /* --- ÉMISSION D'ÉVÉNEMENT DÉSACTIVÉE pour le porte monnaie d'Alfred ---
     const pdfGeneratedCommand = InspectionPdfGeneratedEvent.build({
         inspectionId,
         propertyId,
@@ -310,8 +311,8 @@ export const handler = async (
     });
 
     await eventBridgeClient.send(pdfGeneratedCommand);
-
     logger.info("InspectionPdfGeneratedEvent emitted", { inspectionId });
+    ----------------------------------------- */
 
     return {
         statusCode: 200,
