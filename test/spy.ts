@@ -13,4 +13,8 @@ export class ServerlessSpyEvents {
   FunctionPdfGeneratorResponse: 'Function#PdfGenerator#Response' = 'Function#PdfGenerator#Response';
   EventBridgeRuleEventBusAgencySyncRule: 'EventBridgeRule#EventBus#AgencySyncRule' = 'EventBridgeRule#EventBus#AgencySyncRule';
   EventBridgeRuleEventBusPdfGenerationRule: 'EventBridgeRule#EventBus#PdfGenerationRule' = 'EventBridgeRule#EventBus#PdfGenerationRule';
+  FunctionGetPdfUrlRequest: 'Function#GetPdfUrl#Request' = 'Function#GetPdfUrl#Request';
+  FunctionGetPdfUrlError: 'Function#GetPdfUrl#Error' = 'Function#GetPdfUrl#Error';
+  FunctionGetPdfUrlConsole: 'Function#GetPdfUrl#Console' = 'Function#GetPdfUrl#Console';
+  FunctionGetPdfUrlResponse: 'Function#GetPdfUrl#Response' = 'Function#GetPdfUrl#Response';
 }
