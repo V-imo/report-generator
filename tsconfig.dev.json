@@ -27,11 +27,14 @@
     "moduleResolution": "nodenext",
     "typeRoots": [
       "./node_modules/@types"
-    ]
+    ],
+    "jsx": "react-jsx",
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*.ts",
     "test/**/*.ts",
+    "src/**/*.tsx",
     ".projenrc.ts",
     "projenrc/**/*.ts"
   ],
