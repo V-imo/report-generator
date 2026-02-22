@@ -98,6 +98,36 @@ export class ReportGenerator extends cdk.Stack {
             targets: [new events_targets.LambdaFunction(pdfGenerator)],
         });
 
+        const getPdfUrlFn = new ln.NodejsFunction(this, "GetPdfUrl", {
+            entry: `${__dirname}/functions/get-pdf-url.ts`,
+            environment: {
+                STAGE: props.stage,
+                SERVICE: props.serviceName,
+                BUCKET_NAME: pdfBucket.bucketName,
+            },
+            runtime: lambda.Runtime.NODEJS_22_X,
+            architecture: lambda.Architecture.ARM_64,
+            logRetention: logs.RetentionDays.THREE_DAYS,
+            tracing: lambda.Tracing.ACTIVE,
+            timeout: cdk.Duration.seconds(10),
+            memorySize: 256,
+        });
+
+        pdfBucket.grantRead(getPdfUrlFn);
+
+        const getPdfUrlFunctionUrl = getPdfUrlFn.addFunctionUrl({
+            authType: lambda.FunctionUrlAuthType.NONE,
+            cors: {
+                allowedOrigins: ["*"],
+                allowedMethods: [lambda.HttpMethod.GET],
+                allowedHeaders: ["Content-Type"],
+            },
+        });
+
+        new cdk.CfnOutput(this, "GetPdfUrlFunctionUrl", {
+            value: getPdfUrlFunctionUrl.url,
+        });
+
         if (props.stage.startsWith("test")) {
             const serverlessSpy = new ServerlessSpy(this, "ServerlessSpy", {
                 generateSpyEventsFileLocation: "test/spy.ts",
@@ -108,7 +138,9 @@ export class ReportGenerator extends cdk.Stack {
 
     getEventBus(stage: string) {
         if (stage.startsWith("test")) {
-            const eventBus = new events.EventBus(this, "EventBus");
+            const eventBus = new events.EventBus(this, "EventBus", {
+                eventBusName: `${stage}-vimo-event-bus`,
+            });
             return eventBus;
         }
         return events.EventBus.fromEventBusArn(

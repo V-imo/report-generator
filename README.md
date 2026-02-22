@@ -13,6 +13,7 @@
 ```bash
 npx projen new --from projalf
 ```
+npx cdk bootstrap aws://037721735852/eu-north-1
 
 ## ⚙️ Configuration AWS
 
@@ -20,6 +21,7 @@ npx projen new --from projalf
 ```bash
 aws sso login --profile dev
 ```
+###  aws cloudformation describe-stacks --stack-name test-report-generator --profile dev --no-cli-pager | grep GetPdfUrl
 
 ### Génération de la configuration
 ```bash
